@@ -24,3 +24,47 @@ def is_sentence(text):
         return False
 
     return True
+
+
+
+import string
+
+def get_sentence():
+    while True:
+        sentence = input("Enter a sentence: ").strip()
+        if (len(sentence) > 0 and
+            sentence[0].isupper() and
+            sentence[-1] in ".?!"):
+            return sentence
+        else:
+            print("Invalid input sentence must start with a capital letter and end with '.', '?' or '!'.")
+
+def calculate_frequencies(sentence):
+    translator = str.maketrans('', '', string.punctuation.replace("'", ""))
+    cleaned_sentence = sentence.translate(translator).lower()
+    words = cleaned_sentence.split()
+    word_list = []
+    frequency_list = []
+
+    for word in words:
+        if word in word_list:
+            index = word_list.index(word)
+             frequency_list[index] += 1
+        else:
+            word_list.append(word)
+            frequency_list.append(1)
+
+    return word_list, frequency_list
+
+def print_frequencies(words, frequencies):
+    print("Word Frequencies:")
+    for word, freq in zip(words, frequencies):
+        print(f"{word}: {freq}")
+
+def main():
+    sentence = get_sentence()
+    words, frequencies = calculate_frequencies(sentence)
+    print_frequencies(words, frequencies)
+
+if __name__ == "__main__":
+    main()
